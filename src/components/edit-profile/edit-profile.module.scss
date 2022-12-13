@@ -1,0 +1,62 @@
+.container {
+    width: 384px;
+    height: 600px;
+    background: white;
+    margin: 30px auto;
+    margin-top: 60px;
+    .edit {
+        font-size: 20px;
+        line-height: 28px;
+        text-align: center;
+        padding-top: 48px;
+        margin: 0;
+    }
+    .form {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 21px;
+        .formInput {
+            width: 305px;
+            height: 40px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+        .username {
+            margin: 0;
+            margin-bottom: 3x;           
+        }
+        .email {
+            margin: 0;
+            margin-bottom: 3x;
+        }
+        .newPassword {
+            margin: 0;
+            margin-bottom: 3x;
+        }
+        .avatar {
+            margin: 0;
+            margin-bottom: 3px;
+        }
+        .save {
+            width: 320px;
+            height: 40px;
+            border: 1px solid #1890FF;
+            background: #1890FF;
+            border-radius: 6px;
+            padding-left: 15px; 
+            color:white;
+            cursor: pointer;
+        }
+    }
+    input:disabled {
+        opacity: 0.2;
+       }
+       .errorMessage {
+        margin: 0;
+        margin-bottom: 15px;
+        color: red;
+       }
+}

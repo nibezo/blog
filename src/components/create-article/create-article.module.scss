@@ -1,0 +1,113 @@
+.container {
+    width: 938px;
+    min-height: 800px;
+    margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 162px;
+    background: white;
+    border: 1px solid white;
+    border-radius: 6px;
+    .createArticle {
+        padding-top: 48px;
+        text-align: center;
+    }
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px 0 0 32px;
+        .formInput {
+            width: 860px;
+            height: 40px;
+            font-size: 16px;
+            line-height: 24px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            padding-left: 14px;
+            margin-bottom: 21px;
+        }
+        .bodyText {
+            width: 860px;
+            height: 168px;
+            font-size: 16px;
+            line-height: 24px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            padding-left: 14px;
+            margin-bottom: 21px;
+            resize: none;
+        }
+        .tags {        
+            margin-bottom: 21px;
+        }
+        .tagsInput {
+            width: 288px;
+            height: 40px;
+            padding-left: 12px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            padding-left: 12px;
+        }
+        .addTag {
+            margin: 0 400px 0 20px;
+            width: 120px;
+            height: 40px;
+            text-align: center;
+            color: #1890FF;
+            border: 1px solid #1890FF;
+            border-radius: 6px;;
+            background: white;
+            &:hover {
+                background: #1890FF;
+                color: white;
+                cursor: pointer;
+            }
+        }
+        .sendArticle {
+            width: 320px;
+            height: 40px;
+            border: 1px solid #D9D9D9;
+            border-radius: 6px;
+            color: white;
+            line-height: 22px;
+            background: #1890FF;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .textTitle,
+        .textDescription,
+        .bodyTitle,
+        .tagsTitle {
+            margin: 0;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 3px;
+        }
+    }
+    .errorMessage {
+        margin: 0;
+        margin-bottom: 15px;
+        color: red;
+    }
+    input:disabled {
+        opacity: 0.2;
+    }
+    .tagsContainer {
+        display: flex;
+        margin-top: 10px;
+        .addTagsButton {
+            margin: 0 0 0 20px;
+            width: 120px;
+            height: 40px;
+            text-align: center;
+            color: red;
+            border: 1px solid red;
+            border-radius: 6px;;
+            background: white;
+            &:hover {
+                background: red;
+                color: white;
+                cursor: pointer;
+            }
+        }
+    }
+}
