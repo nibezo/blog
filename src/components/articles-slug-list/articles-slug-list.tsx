@@ -6,7 +6,7 @@ import { IArticle } from '../../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { editArticle } from '../../redux/reducersSlice/createSlice';
 import { useDispatch } from 'react-redux';
-import { fetchDeleteArticle } from '../../redux/createAsyncThunk/createAsyncThunk';
+import { fetchArticles, fetchDeleteArticle } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { Popconfirm, message } from 'antd';
 import { AppDispatch } from '../../redux/store';
 
@@ -15,7 +15,7 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const confirm = () => {
-    dispatch(fetchDeleteArticle(slug));
+    dispatch(fetchDeleteArticle(slug)).then(() => fetchArticles(1));
     dispatch(editArticle(false));
     navigate('/');
     message.success('Click on Yes');
@@ -65,7 +65,7 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
             okText="Yes"
             cancelText="No"
           >
-            <button type="button" aria-label="delete" className={styles.deleteArticle} onClick={() => {}}>
+            <button type="button" aria-label="delete" className={styles.deleteArticle}>
               Delete
             </button>
           </Popconfirm>
