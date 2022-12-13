@@ -6,7 +6,12 @@ import { IArticle } from '../../types';
 import { Link, useNavigate } from 'react-router-dom';
 import { editArticle } from '../../redux/reducersSlice/createSlice';
 import { useDispatch } from 'react-redux';
-import { fetchArticles, fetchDeleteArticle } from '../../redux/createAsyncThunk/createAsyncThunk';
+import {
+  fetchArticles,
+  fetchDeleteArticle,
+  fetchDeleteFavorite,
+  fetchPostFavorite,
+} from '../../redux/createAsyncThunk/createAsyncThunk';
 import { Popconfirm, message } from 'antd';
 import { AppDispatch } from '../../redux/store';
 
@@ -30,7 +35,13 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
         <li className={styles.container}>
           <div className={styles.header}>
             <span className={styles.article}>{title}</span>
-            <button className={styles.buttonLike}>
+            <button
+              className={styles.buttonLike}
+              onClick={() => {
+                dispatch(fetchPostFavorite(slug)).then(() => dispatch(fetchArticles(1)));
+                dispatch(fetchDeleteFavorite(slug)).then(() => dispatch(fetchArticles(1)));
+              }}
+            >
               <img src={likes} alt="like" className={styles.like} />
             </button>
             <span className={styles.count}>{favoritesCount}</span>
