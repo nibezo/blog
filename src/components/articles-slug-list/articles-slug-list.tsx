@@ -8,6 +8,7 @@ import { editArticle } from '../../redux/reducersSlice/createSlice';
 import { useDispatch } from 'react-redux';
 import {
   fetchArticles,
+  fetchArticlesSlug,
   fetchDeleteArticle,
   fetchDeleteFavorite,
   fetchPostFavorite,
@@ -38,8 +39,8 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
             <button
               className={styles.buttonLike}
               onClick={() => {
-                dispatch(fetchPostFavorite(slug)).then(() => dispatch(fetchArticles(1)));
-                dispatch(fetchDeleteFavorite(slug)).then(() => dispatch(fetchArticles(1)));
+                dispatch(fetchPostFavorite(slug)).then(() => dispatch(fetchArticlesSlug(slug)));
+                dispatch(fetchDeleteFavorite(slug)).then(() => dispatch(fetchArticlesSlug(slug)));
               }}
             >
               <img src={likes} alt="like" className={styles.like} />
