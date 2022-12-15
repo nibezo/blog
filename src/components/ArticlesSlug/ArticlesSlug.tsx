@@ -1,11 +1,11 @@
-import styles from './articles-slug.module.scss';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styles from './ArticlesSlug.module.scss';
 import { IArticle } from '../../types';
 import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
 import { fetchArticlesSlug } from '../../redux/createAsyncThunk/createAsyncThunk';
-import { useDispatch } from 'react-redux';
-import ArticlesSlugList from '../articles-slug-list/articles-slug-list';
+import { ArticlesSlugList } from '../ArticlesSlugList/ArticlesSlugList';
 import { AppDispatch } from '../../redux/store';
 
 const ArticlesSlug = () => {
@@ -35,4 +35,4 @@ const ArticlesSlug = () => {
   );
 };
 
-export default ArticlesSlug;
+export { ArticlesSlug };

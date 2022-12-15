@@ -1,11 +1,12 @@
-import styles from './articles-slug-list.module.scss';
+import ReactMarkdown from 'react-markdown';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Popconfirm, message } from 'antd';
+import styles from './ArticlesSlugList.module.scss';
 import likes from '../../images/like.png';
 import { UserDate } from '../../utils/date-author';
-import ReactMarkdown from 'react-markdown';
 import { IArticle } from '../../types';
-import { Link, useNavigate } from 'react-router-dom';
 import { editArticle } from '../../redux/reducersSlice/createSlice';
-import { useDispatch } from 'react-redux';
 import {
   fetchArticles,
   fetchArticlesSlug,
@@ -13,7 +14,6 @@ import {
   fetchDeleteFavorite,
   fetchPostFavorite,
 } from '../../redux/createAsyncThunk/createAsyncThunk';
-import { Popconfirm, message } from 'antd';
 import { AppDispatch } from '../../redux/store';
 
 const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCount, slug }: IArticle) => {
@@ -49,7 +49,13 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
             <span className={styles.author}>{author.username}</span>
           </div>
           <div className={styles.titleDate}>
-            <div className={styles.title}>{tagList.map((date: string) => date)}</div>
+            <span className={styles.titleSpan}>
+              {tagList.map((el: string, id: number) => (
+                <div key={id} className={styles.titleDiv}>
+                  <span className={styles.title}>{el}</span>
+                </div>
+              ))}
+            </span>
             <span className={styles.birthday}>{UserDate(createdAt)}</span>
           </div>
           <img src={author.image} alt="user" className={styles.img} />
@@ -66,7 +72,13 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
             <span className={styles.author}>{author.username}</span>
           </div>
           <div className={styles.titleDate}>
-            <div className={styles.title}>{tagList.map((date: string) => date)}</div>
+            <span className={styles.titleSpan}>
+              {tagList.map((el: string, id: number) => (
+                <div key={id} className={styles.titleDiv}>
+                  <span className={styles.title}>{el}</span>
+                </div>
+              ))}
+            </span>
             <span className={styles.birthday}>{UserDate(createdAt)}</span>
           </div>
           <img src={author.image} alt="user" className={styles.imgAuthor} />
@@ -98,4 +110,4 @@ const ArticlesSlugList = ({ body, title, tagList, author, createdAt, favoritesCo
   );
 };
 
-export default ArticlesSlugList;
+export { ArticlesSlugList };

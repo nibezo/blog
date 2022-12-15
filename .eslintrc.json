@@ -1,34 +1,50 @@
 {
     "env": {
-        "browser": true,
-        "es2021": true,
-        "jest": true
+      "browser": true,
+      "es2021": true
     },
     "extends": [
-        "react-app",
-        "react-app/jest",
-        "airbnb-typescript",
-        "plugin:import/typescript",
-        "plugin:prettier/recommended"
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "airbnb-base",
+      "airbnb-typescript/base",
+      "prettier"
     ],
+    "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module",
-        "project": "./tsconfig.json"
+      "ecmaVersion": "latest",
+      "sourceType": "module",
+      "project": "./tsconfig.json"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint",
-        "prettier"
-    ],
+    "plugins": ["react", "@typescript-eslint", "prettier"],
     "rules": {
-        "react/react-in-jsx-scope": ["off"],
-        "react/jsx-uses-react": ["off"],
-        "react/jsx-props-no-spreading": ["warn"],
-        "react/no-unescaped-entities": ["off"]
+      "prettier/prettier": "error",
+      "react/react-in-jsx-scope": 0,
+      "default-param-last": "off",
+      "@typescript-eslint/default-param-last": "off",
+      "no-param-reassign": 0,
+      "@typescript-eslint/no-explicit-any": ["off"],
+      "import/prefer-default-export": "off",
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
+      "object-curly-newline": "off"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
     }
-}
+  }
+  

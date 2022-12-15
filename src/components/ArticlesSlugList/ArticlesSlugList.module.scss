@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+.container {
+    width: 941px;
+    height: 870px;
+    list-style: none;
+    min-height: 140px;
+    background: white;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid white;
+    border-radius: 6px;
+    .author {
+        text-align: end;
+        width: 100px;
+        min-height: 20px;
+        margin-right: 70px;
+    }
+    .birthday {
+        font-size: 12px;
+        line-height: 22px;
+        font-weight: 400;
+        margin: 0;
+        margin-right: 70px;
+    }
+    .img {
+        width: 46px;
+        height: 46px;
+        background: #000;
+        border-radius: 50%;
+        transform: translate(440px, -60px);
+    }
+    .article {
+        max-width: 250px;
+        height: 30px;
+        font-size: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 28px;
+        font-weight: 400;
+        margin: 0 10px 10px 30px;
+        color:#1890FF;
+        text-align: start;
+    }
+    .title {
+        width: 50px;
+        height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 7px 7px 0 0;
+        color: rgba(0, 0, 0, 0.5);
+        border: 1px solid gray;
+        border-radius: 6px;
+        padding: 2px 5px;
+    }
+    .titleDate {
+        display: flex;
+        justify-content: space-between;
+    }
+    .titleSpan {
+        width: 700px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: start;
+    }
+    .titleDiv {
+        display: inline;
+        margin: 0;
+        &:first-child {
+            margin-left: 30px
+        }
+    }
+    .text {
+        width: 682px;
+        height: 45px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400;
+        margin: -45px 0 0 30px;
+        color: rgba(0, 0, 0, 0.75);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: start;
+    }
+    .like {
+        width: 20px;
+        cursor: pointer;
+        transform: translateY(2px);
+    }
+    .buttonLike {
+        background: none;
+        border: none;
+    }
+    .count {
+        margin: 0 497px 0 0;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+    }
+    .markdown {
+        text-align: start;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0 30px;
+    }
+    .deleteArticle {
+        width: 80px;
+        height: 40px;
+        border: 1px solid red;
+        border-radius: 6px;
+        color: red;
+        background: white;
+        transform: translate(350px, -20px);
+        &:hover {
+            background: red;
+            color: white;
+            cursor: pointer;
+        }
+    }
+    .editArticle {
+        width: 80px;
+        height: 40px;
+        border: 1px solid green;
+        border-radius: 6px;
+        color: green;
+        background: white;
+        transform: translate(360px, -20px);
+        &:hover {
+            background: green;
+            color: white;
+            cursor: pointer;
+        }
+    }
+    .imgAuthor {
+        width: 45px;
+        height: 45px;
+        border: 1px solid black;
+        border-radius: 50%;
+        transform: translate(520px, -65px);
+    }
+}

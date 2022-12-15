@@ -1,9 +1,9 @@
-import styles from './articles-list.module.scss';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styles from './ArticlesList.module.scss';
 import likes from '../../images/like.png';
 import { UserDate } from '../../utils/date-author';
-import { Link } from 'react-router-dom';
 import { IArticle } from '../../types';
-import { useDispatch } from 'react-redux';
 import { fetchArticles, fetchDeleteFavorite, fetchPostFavorite } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { AppDispatch } from '../../redux/store';
 
@@ -13,8 +13,8 @@ const ArticlesList = ({ body, title, tagList, author, createdAt, favoritesCount,
     <>
       <li className={styles.container}>
         <div className={styles.header}>
-          <Link to={`/articles/${slug}`} className={styles.article}>
-            {title}
+          <Link to={`/articles/${slug}`} className={styles.linkArticle}>
+            <span className={styles.article}>{title}</span>
           </Link>
           <button
             className={styles.buttonLike}
@@ -29,7 +29,13 @@ const ArticlesList = ({ body, title, tagList, author, createdAt, favoritesCount,
           <span className={styles.author}>{author.username}</span>
         </div>
         <div className={styles.titleDate}>
-          <span className={styles.title}>{tagList.map((el) => el)}</span>
+          <span className={styles.titleSpan}>
+            {tagList.map((el: string, id: number) => (
+              <div key={id} className={styles.titleDiv}>
+                <span className={styles.title}>{el}</span>
+              </div>
+            ))}
+          </span>
           <span className={styles.birthday}>{UserDate(createdAt)}</span>
         </div>
         <img src={author.image} alt="user" className={styles.img} />
@@ -39,4 +45,4 @@ const ArticlesList = ({ body, title, tagList, author, createdAt, favoritesCount,
   );
 };
 
-export default ArticlesList;
+export { ArticlesList };

@@ -1,16 +1,16 @@
-import styles from './header.module.scss';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import styles from './Header.module.scss';
 import avatar from '../../images/user.png';
 import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
-import { useEffect } from 'react';
-import { oauth } from '../../redux/reducersSlice/createSlice';
-import { useDispatch } from 'react-redux';
+import { editArticle, oauth } from '../../redux/reducersSlice/createSlice';
 
 const Header = () => {
   const tokenLocal = localStorage.getItem('token');
   const user = localStorage.getItem('username');
   const image = localStorage.getItem('image');
-  const { status, username, img } = useAppSelector((state) => state.articles);
+  const { status, username } = useAppSelector((state) => state.articles);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -29,32 +29,33 @@ const Header = () => {
           <Link to="/articles" className={styles.text}>
             Realworld Blog
           </Link>
-          <button className={styles.singIn}>
-            <Link to="sign-in" className={styles.signInText}>
-              Sign In
-            </Link>
-          </button>
-          <button className={styles.singUp}>
-            <Link to="sign-up" className={styles.signUpText}>
-              Sign Up
-            </Link>
-          </button>
+          <Link to="sign-in" className={styles.singIn}>
+            Sign In
+          </Link>
+          <Link to="sign-up" className={styles.singUp}>
+            Sign Up
+          </Link>
         </div>
       ) : (
         <div className={styles.container}>
           <Link to="/articles" className={styles.text}>
-            Realworld Blog
+            <button
+              type="button"
+              aria-label="edit"
+              onClick={() => dispatch(editArticle(false))}
+              className={styles.text}
+            >
+              Realworld Blog
+            </button>
           </Link>
-          <button className={styles.createArticleButton}>
-            <Link to="/new-article" className={styles.createArticle}>
-              Create article
-            </Link>
-          </button>
-          <Link to="/profile">
-            <p className={styles.usernameText}>{username || user}</p>
+          <Link to="/new-article" className={styles.createArticleButton}>
+            Create article
+          </Link>
+          <Link to="/profile" className={styles.usernameText}>
+            <p>{username || user}</p>
           </Link>
           <Link to="/profile">
-            <img src={img ? img || image : avatar} alt="useImg" className={styles.userImg} />
+            <img src={image || avatar} alt="useImg" className={styles.userImg} />
           </Link>
           <Link to="/">
             <button
@@ -74,4 +75,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export { Header };

@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import styles from './edit-profile.module.scss';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { fetchUserUpdate } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { useNavigate } from 'react-router-dom';
+import { fetchArticles, fetchUserUpdate } from '../../redux/createAsyncThunk/createAsyncThunk';
+import styles from './EditProfile.module.scss';
 import { AppDispatch } from '../../redux/store';
 
 interface IEditProfile {
@@ -30,7 +30,7 @@ const EditProfile = () => {
           className={styles.form}
           onSubmit={handleSubmit((el) => {
             localStorage.setItem('username', el.username);
-            dispatch(fetchUserUpdate(el));
+            dispatch(fetchUserUpdate(el)).then(() => dispatch(fetchArticles(1)));
             navigate('/');
             reset();
           })}
@@ -113,6 +113,9 @@ const EditProfile = () => {
               <p className={styles.errorMessage}>{errors?.image?.message || 'Ошибка, Введите правильный url'}</p>
             )}
           </label>
+          <label>
+            <input type="submit" className={styles.save} value="Save" disabled={!isValid} />
+          </label>
           <input type="submit" className={styles.save} value="Save" disabled={!isValid} />
         </form>
       </div>
@@ -120,4 +123,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export { EditProfile };

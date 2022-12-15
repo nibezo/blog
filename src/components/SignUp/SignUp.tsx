@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import styles from './sign-up.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import styles from './SignUp.module.scss';
 import { fetchSignUp } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { AppDispatch } from '../../redux/store';
 
@@ -25,6 +25,7 @@ const SignUp = () => {
   } = useForm<IFormSignUp>({ mode: 'onBlur' });
   const dispatch = useDispatch<AppDispatch>();
   const repeatPassword: any = useRef();
+  const navigate = useNavigate();
   repeatPassword.current = watch('password', '');
   return (
     <>
@@ -34,6 +35,7 @@ const SignUp = () => {
           className={styles.form}
           onSubmit={handleSubmit((el) => {
             dispatch(fetchSignUp(el));
+            navigate('/');
             reset();
           })}
         >
@@ -66,7 +68,7 @@ const SignUp = () => {
               {...register('email', {
                 required: 'Поле обязательно должно быть заполненным',
                 pattern: {
-                  value: /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
+                  value: /\S+@\S+\.\S+/,
                   message: 'Укажите пожалуйста правильный email',
                 },
               })}
@@ -117,16 +119,21 @@ const SignUp = () => {
           </label>
           <div className={styles.line}></div>
           <div className={styles.agreement}>
-            <input
-              {...register('agree', {
-                required: true,
-              })}
-              type="checkbox"
-              className={styles.checkbox}
-            />
+            <label>
+              <input
+                {...register('agree', {
+                  required: true,
+                })}
+                type="checkbox"
+                className={styles.checkbox}
+              />
+            </label>
+
             <p className={styles.agree}>I agree to the processing of my personal information</p>
           </div>
-          <input type="submit" className={styles.createAcount} disabled={!isValid} />
+          <label>
+            <input type="submit" className={styles.createAcount} disabled={!isValid} />
+          </label>
         </form>
         <p className={styles.singIn}>
           Already have an account? <Link to="/sign-in">Sign In.</Link>
@@ -136,4 +143,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export { SignUp };

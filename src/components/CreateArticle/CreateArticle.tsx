@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import styles from './create-article.module.scss';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchCreateArticle, fetchUpdateArticle, fetchArticles } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { useNavigate, useParams } from 'react-router-dom';
+import { fetchCreateArticle, fetchUpdateArticle, fetchArticles } from '../../redux/createAsyncThunk/createAsyncThunk';
+import styles from './CreateArticle.module.scss';
 import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
 import { editArticle } from '../../redux/reducersSlice/createSlice';
 import { AppDispatch } from '../../redux/store';
@@ -24,22 +24,12 @@ const CreateArticle = () => {
     handleSubmit,
   } = useForm<ICreateArticle>({ mode: 'onBlur' });
   const [value, setValue] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tagList, setTags] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { edit, article } = useAppSelector((state) => state.articles);
   const { slug } = useParams();
-  const onSubmit = ({
-    title,
-    description,
-    body,
-    tagList,
-  }: {
-    title: string;
-    description: string;
-    body: string;
-    tagList: string;
-  }) => {
+  const onSubmit = ({ title, description, body }: { title: string; description: string; body: string }) => {
     if (edit) {
       dispatch(fetchUpdateArticle({ title, description, body, slug })).then(() => dispatch(fetchArticles(1)));
       dispatch(editArticle(false));
@@ -140,7 +130,7 @@ const CreateArticle = () => {
               className={styles.addTag}
               onClick={() => {
                 if (value !== '') {
-                  setTags([...tags, value]);
+                  setTags([...tagList, value]);
                   setValue('');
                 }
               }}
@@ -150,28 +140,7 @@ const CreateArticle = () => {
             {edit
               ? article
                   .map((el) => el.tagList)
-                  .map((el, id) => {
-                    return (
-                      <div key={id}>
-                        <label className={styles.tagsContainer}>
-                          <input value={el} className={styles.tagsInput} />
-                          <button
-                            type="button"
-                            aria-label="tags"
-                            className={styles.addTagsButton}
-                            onClick={() => {
-                              const result = tags.filter((_, resId) => resId !== id);
-                              setTags(result);
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </label>
-                      </div>
-                    );
-                  })
-              : tags.map((el, id) => {
-                  return (
+                  .map((el, id) => (
                     <div key={id}>
                       <label className={styles.tagsContainer}>
                         <input value={el} className={styles.tagsInput} />
@@ -180,7 +149,7 @@ const CreateArticle = () => {
                           aria-label="tags"
                           className={styles.addTagsButton}
                           onClick={() => {
-                            const result = tags.filter((_, resId) => resId !== id);
+                            const result = tagList.filter((_, resId) => resId !== id);
                             setTags(result);
                           }}
                         >
@@ -188,14 +157,33 @@ const CreateArticle = () => {
                         </button>
                       </label>
                     </div>
-                  );
-                })}
+                  ))
+              : tagList.map((el, id) => (
+                  <div key={id}>
+                    <label className={styles.tagsContainer}>
+                      <input value={el} className={styles.tagsInput} />
+                      <button
+                        type="button"
+                        aria-label="tags"
+                        className={styles.addTagsButton}
+                        onClick={() => {
+                          const result = tagList.filter((_, resId) => resId !== id);
+                          setTags(result);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </label>
+                  </div>
+                ))}
           </label>
-          <input type="submit" value="Send" className={styles.sendArticle} disabled={!isValid} />
+          <label>
+            <input type="submit" value="Send" className={styles.sendArticle} disabled={!isValid} />
+          </label>
         </form>
       </div>
     </>
   );
 };
 
-export default CreateArticle;
+export { CreateArticle };

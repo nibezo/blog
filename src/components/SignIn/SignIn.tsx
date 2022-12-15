@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Link, useNavigate } from 'react-router-dom';
-import styles from './sing-in.module.scss';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import styles from './SignIn.module.scss';
 import { fetchSignIn } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
 import { AppDispatch } from '../../redux/store';
@@ -21,11 +21,14 @@ const SingIn = () => {
     handleSubmit,
   } = useForm<IFormSignIn>({ mode: 'onBlur' });
   const dispatch = useDispatch<AppDispatch>();
-  const status = useAppSelector((state) => state.articles.status);
+  const { status } = useAppSelector((state) => state.articles);
   const navigate = useNavigate();
   useEffect(() => {
     if (status) navigate('/');
   });
+  // if (error) {
+  //   return <div>sadsd</div>;
+  // }
   return (
     <>
       <div className={styles.container}>
@@ -43,7 +46,7 @@ const SingIn = () => {
             <input
               {...register('email', {
                 required: 'Поле обязательно должно быть заполненным',
-                pattern: /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
+                pattern: /\S+@\S+\.\S+/,
               })}
               placeholder="Email address"
               type="email"
@@ -65,7 +68,9 @@ const SingIn = () => {
             />
             {errors?.password && <p className={styles.errorMessage}>{errors?.password?.message || 'Ошибка'}</p>}
           </label>
-          <input type="submit" value="Login" className={styles.login} disabled={!isValid} />
+          <label>
+            <input type="submit" value="Login" className={styles.login} disabled={!isValid} />
+          </label>
         </form>
         <p className={styles.account}>
           Don’t have an account? <Link to="/sign-up">Sign Up.</Link>
@@ -75,4 +80,4 @@ const SingIn = () => {
   );
 };
 
-export default SingIn;
+export { SingIn };

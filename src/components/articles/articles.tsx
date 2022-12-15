@@ -1,10 +1,10 @@
-import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
-import { fetchArticles } from '../../redux/createAsyncThunk/createAsyncThunk';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import ArticlesList from '../articles-list/articles-list';
-import styles from './articles.module.scss';
 import { Pagination } from 'antd';
+import { useAppSelector } from '../../redux/hooks/useTypedSelecor';
+import { fetchArticles } from '../../redux/createAsyncThunk/createAsyncThunk';
+import { ArticlesList } from '../ArticlesList/ArticlesList';
+import styles from './Articles.module.scss';
 import { IArticle } from '../../types';
 import { AppDispatch } from '../../redux/store';
 
@@ -37,4 +37,4 @@ const Articles = () => {
   );
 };
 
-export default Articles;
+export { Articles };

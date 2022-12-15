@@ -1,9 +1,11 @@
+/* eslint-disable no-alert */
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchArticles,
   fetchArticlesSlug,
   fetchCreateArticle,
   fetchSignIn,
+  fetchSignUp,
   fetchUserUpdate,
 } from '../createAsyncThunk/createAsyncThunk';
 
@@ -12,7 +14,6 @@ interface IUser {
   article: any[];
   username: string;
   token: string;
-  img: string;
   status: boolean;
   editArticle: any[];
   body: string;
@@ -21,7 +22,7 @@ interface IUser {
   slug: string;
   edit: boolean;
   loading: boolean;
-  error: string | null;
+  error: boolean | null;
 }
 const initialState: IUser = {
   articles: [],
@@ -35,7 +36,6 @@ const initialState: IUser = {
   slug: '',
   status: false,
   edit: false,
-  img: '',
   loading: true,
   error: null,
 };
@@ -78,9 +78,30 @@ const ArticlesSlice = createSlice({
       .addCase(fetchSignIn.fulfilled, (state, action) => {
         localStorage.setItem('token', action.payload.token);
         localStorage.setItem('username', action.payload.username);
+        localStorage.setItem('image', action.payload.image);
         state.status = true;
         state.loading = false;
         state.error = null;
+      })
+      // .addCase(fetchSignIn.rejected, (_, action) => {
+      //   alert(JSON.stringify(action.payload.response.data.errors));
+      // })
+      .addCase(fetchSignUp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSignUp.fulfilled, (state, action) => {
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('username', action.payload.username);
+        state.status = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(fetchSignIn.rejected, (_, action) => {
+        alert(action.payload);
+      })
+      .addCase(fetchSignUp.rejected, (_, action) => {
+        alert(action.payload);
       })
       .addCase(fetchUserUpdate.pending, (state) => {
         state.loading = true;
@@ -89,7 +110,6 @@ const ArticlesSlice = createSlice({
       .addCase(fetchUserUpdate.fulfilled, (state, action) => {
         localStorage.setItem('image', action.payload.image);
         state.username = action.payload.username;
-        state.img = action.payload.image;
         state.loading = false;
         state.error = null;
       })

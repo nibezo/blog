@@ -12,6 +12,11 @@
     line-height: 28px;
     font-weight: 400;
     margin: 0;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    border: none;
+    background: none;
 }
 .singIn {
     width: 84px;
@@ -22,10 +27,12 @@
     background: none;
     border: none;
     margin-left: 550px;
+    color: rgba(0, 0, 0, 0.85);
+    text-decoration: none;
 }
 .singUp {
     width: 109px;
-    height: 51px;
+    height: 40px;
     font-size: 18px;
     line-height: 28px;
     font-weight: 400;
@@ -34,6 +41,13 @@
     border: 1px solid #52C41A;
     border-radius: 6px;
     margin-right: 22px;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 11px;
+    &:hover {
+        background: #52C41A;
+        color: white;
+    }
 }
 .logOut {
     width: 109px;
@@ -45,6 +59,10 @@
     border-radius: 6px;
     margin-right: 22px;
     cursor: pointer;
+    &:hover {
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+    }
 }
 .userImg {
     cursor: pointer;
@@ -57,6 +75,8 @@
     margin-right: 13px;
     font-size: 18px;
     line-height: 28px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.85);
     cursor: pointer;
 }
 .createArticleButton {
@@ -67,6 +87,14 @@
     border: 1px solid #52C41A;
     border-radius: 6px;
     cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+        background: #52C41A;
+        color: white;
+    }
 }
 @media(min-width: 1200px) {
     .singIn {

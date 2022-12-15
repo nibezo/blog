@@ -1,18 +1,16 @@
+/* eslint-disable no-alert */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchArticles = createAsyncThunk<any, number, { rejectValue: string }>(
-  'articles/fetchArticles',
-  async function (offset, { rejectWithValue }) {
-    const response = await fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${(offset - 1) * 5}`);
-    if (!response.ok) rejectWithValue('Server Error!');
-    const user = await response.json();
-    return user.articles;
-  },
-);
+export const fetchArticles = createAsyncThunk('articles/fetchArticles', async (offset: number, { rejectWithValue }) => {
+  const response = await fetch(`https://blog.kata.academy/api/articles?limit=5&offset=${(offset - 1) * 5}`);
+  if (!response.ok) rejectWithValue('Server Error!');
+  const user = await response.json();
+  return user.articles;
+});
 
-export const fetchArticlesSlug = createAsyncThunk<any, any, { rejectValue: string }>(
+export const fetchArticlesSlug = createAsyncThunk(
   'articles/fetchArticlesSlug',
-  async function (slug: string | number, { rejectWithValue }) {
+  async (slug: string | undefined, { rejectWithValue }) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`);
     if (!response.ok) rejectWithValue('Server Error!');
     const user = await response.json();
@@ -22,68 +20,74 @@ export const fetchArticlesSlug = createAsyncThunk<any, any, { rejectValue: strin
 
 export const fetchSignUp = createAsyncThunk(
   'articles/fetchSignUp',
-  async function (
+  async (
     { username, email, password }: { username: string; email: string; password: string | number },
     { rejectWithValue },
-  ) {
-    const response = await fetch('https://blog.kata.academy/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: {
-          username: username,
-          email: email,
-          password: password,
+  ) => {
+    try {
+      const response = await fetch('https://blog.kata.academy/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }),
-    });
-    if (!response.ok) rejectWithValue('Server Error!');
-    const user = await response.json();
-    return user;
+        body: JSON.stringify({
+          user: {
+            username,
+            email,
+            password,
+          },
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Имя или email уже занято, попробуйте ввести другие данные!');
+      }
+      if (response.ok) {
+        alert('Поздравляю, Вы успешно зарегистрировались');
+      }
+      const { user } = await response.json();
+      return user;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   },
 );
 export const fetchSignIn = createAsyncThunk(
   'articles/fetchSignIn',
-  async function ({ email, password }: { email: string; password: string | number }, { rejectWithValue }) {
-    const response = await fetch('https://blog.kata.academy/api/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: {
-          email: email,
-          password: password,
+  async ({ email, password }: { email: string; password: string | number }, { rejectWithValue }) => {
+    try {
+      const response = await fetch('https://blog.kata.academy/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }),
-    });
-    if (!response.ok) rejectWithValue('Server Error!');
-    const { user } = await response.json();
-    return user;
+        body: JSON.stringify({
+          user: {
+            email,
+            password,
+          },
+          errors: {
+            body: ['string'],
+          },
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Email или пароль неправильный!');
+      }
+      if (response.ok) alert('Вы успешно зашли в ваш кабинет!');
+      const { user } = await response.json();
+      return user;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
   },
 );
 
-// export const fetchUser = createAsyncThunk('articles/fetchUser', async function ({tokenID}, { rejectWithValue }) {
-//   const response = await fetch('https://blog.kata.academy/api/user', {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${tokenID}`,
-//     },
-//   });
-//   if (!response.ok) rejectWithValue('Server Error!');
-//   const user = await response.json();
-//   console.log(user)
-//   return user;
-// });
-
 export const fetchUserUpdate = createAsyncThunk(
   'articles/fetchUserUpdate',
-  async function (
+  async (
     { username, email, password, image }: { username: string; email: string; password: string | number; image: string },
     { rejectWithValue },
-  ) {
+  ) => {
     const response = await fetch('https://blog.kata.academy/api/user', {
       method: 'PUT',
       headers: {
@@ -92,11 +96,11 @@ export const fetchUserUpdate = createAsyncThunk(
       },
       body: JSON.stringify({
         user: {
-          email: email,
-          password: password,
-          username: username,
+          email,
+          password,
+          username,
           bio: 'string',
-          image: image,
+          image,
         },
       }),
     });
@@ -108,10 +112,10 @@ export const fetchUserUpdate = createAsyncThunk(
 
 export const fetchCreateArticle = createAsyncThunk(
   'articles/fetchCreateArticle',
-  async function (
-    { title, description, body, tagList }: { title: string; description: string; body: string; tagList: string },
+  async (
+    { title, description, body, tagList }: { title: string; description: string; body: string; tagList: string[] },
     { rejectWithValue },
-  ) {
+  ) => {
     const response = await fetch('https://blog.kata.academy/api/articles', {
       method: 'POST',
       headers: {
@@ -120,10 +124,10 @@ export const fetchCreateArticle = createAsyncThunk(
       },
       body: JSON.stringify({
         article: {
-          title: title,
-          description: description,
-          body: body,
-          tagList: [tagList],
+          title,
+          description,
+          body,
+          tagList: [...tagList],
         },
       }),
     });
@@ -134,10 +138,10 @@ export const fetchCreateArticle = createAsyncThunk(
 );
 export const fetchUpdateArticle = createAsyncThunk(
   'articles/fetchCreateArticleSlug',
-  async function (
+  async (
     { title, description, body, slug }: { title: string; description: string; body: string; slug: string | undefined },
     { rejectWithValue },
-  ) {
+  ) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
       method: 'PUT',
       headers: {
@@ -146,9 +150,9 @@ export const fetchUpdateArticle = createAsyncThunk(
       },
       body: JSON.stringify({
         article: {
-          title: title,
-          description: description,
-          body: body,
+          title,
+          description,
+          body,
         },
       }),
     });
@@ -159,7 +163,7 @@ export const fetchUpdateArticle = createAsyncThunk(
 );
 export const fetchDeleteArticle = createAsyncThunk(
   'articles/fetchDeleteArticle',
-  async function (slug: string, { rejectWithValue }) {
+  async (slug: string, { rejectWithValue }) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
       method: 'DELETE',
       headers: {
@@ -175,7 +179,7 @@ export const fetchDeleteArticle = createAsyncThunk(
 
 export const fetchPostFavorite = createAsyncThunk(
   'articles/fetchPostFavorite',
-  async function (slug: string, { rejectWithValue }) {
+  async (slug: string, { rejectWithValue }) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
       method: 'POST',
       headers: {
@@ -185,14 +189,13 @@ export const fetchPostFavorite = createAsyncThunk(
     });
     if (!response.ok) rejectWithValue('Server Error!');
     const article = await response.json();
-    console.log(article);
     return article;
   },
 );
 
 export const fetchDeleteFavorite = createAsyncThunk(
   'articles/fetchDeleteFavorite',
-  async function (slug: string, { rejectWithValue }) {
+  async (slug: string, { rejectWithValue }) => {
     const response = await fetch(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
       method: 'DELETE',
       headers: {
